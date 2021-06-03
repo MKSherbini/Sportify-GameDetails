@@ -1,4 +1,4 @@
-package com.example.gamedetails.models;
+package com.example.gamedetails.models.enums;
 
 public enum GamesNames {
     LOL,

@@ -1,13 +1,17 @@
-package com.example.gamedetails.models;
+package com.example.gamedetails.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class GameDetails {
+@NoArgsConstructor
+public class GameDetailsDto {
+    private String codeName;
     private String name;
     private String description;
     private String platform;

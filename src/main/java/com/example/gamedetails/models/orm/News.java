@@ -1,13 +1,22 @@
-package com.example.gamedetails.models;
+package com.example.gamedetails.models.orm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "news")
 public class News {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String title;
     private String image;
     private String description;
@@ -15,4 +24,7 @@ public class News {
     private String publisher;
     //hanb2a ntfahem
     private String content;
+
+    @ManyToOne
+    private Game game;
 }

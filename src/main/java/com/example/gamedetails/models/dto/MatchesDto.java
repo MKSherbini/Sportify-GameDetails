@@ -1,4 +1,4 @@
-package com.example.gamedetails.models;
+package com.example.gamedetails.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,10 +8,10 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class Matches {
+public class MatchesDto {
     private String title;
     private LocalDateTime matchTime;
-    private List<TeamMatchScore> teams;
+    private List<TeamMatchScoreDto> teams;
     private boolean inProgress;
 
 

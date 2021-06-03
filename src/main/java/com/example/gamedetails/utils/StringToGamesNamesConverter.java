@@ -1,6 +1,6 @@
 package com.example.gamedetails.utils;
 
-import com.example.gamedetails.models.GamesNames;
+import com.example.gamedetails.models.enums.GamesNames;
 import org.springframework.core.convert.converter.Converter;
 
 public class StringToGamesNamesConverter implements Converter<String, GamesNames> {
