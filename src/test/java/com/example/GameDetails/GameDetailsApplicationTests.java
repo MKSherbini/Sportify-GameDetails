@@ -1,10 +1,9 @@
-package com.example.UserAuthentication;
+package com.example.GameDetails;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserAuthenticationApplicationTests {
+class GameDetailsApplicationTests {
 
 //	@Test
 //	void contextLoads() {

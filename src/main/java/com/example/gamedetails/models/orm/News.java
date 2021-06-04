@@ -26,5 +26,6 @@ public class News {
     private String content;
 
     @ManyToOne
+    @JoinColumn(name = "game_id")
     private Game game;
 }

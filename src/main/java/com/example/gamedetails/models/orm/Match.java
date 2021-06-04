@@ -23,6 +23,7 @@ public class Match {
     private boolean inProgress;
 
     @ManyToOne
+    @JoinColumn(name = "game_id")
     private Game game;
 
     @OneToMany(mappedBy = "match")

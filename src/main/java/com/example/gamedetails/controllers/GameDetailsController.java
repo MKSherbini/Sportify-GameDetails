@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/games")
+@RequestMapping("/gamesInfo")
 public class GameDetailsController {
 
     private final GameService gameService;
