@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "teams_matches")
 @IdClass(TeamMatchPrimaryKey.class)
-public class TeamMatchScore {
+public class TeamMatchScore implements Persistable<TeamMatchPrimaryKey> {
     @Id
     @ManyToOne
     private Team team;
@@ -27,4 +28,24 @@ public class TeamMatchScore {
 
 
     private int score;
+
+
+    @Transient
+    private boolean isNew = true;
+
+    @Override
+    public boolean isNew() {
+        return isNew;
+    }
+
+    @PrePersist
+    @PostLoad
+    void markNotNew() {
+        this.isNew = false;
+    }
+
+    @Override
+    public TeamMatchPrimaryKey getId() {
+        return new TeamMatchPrimaryKey(getTeam(), getMatch());
+    }
 }

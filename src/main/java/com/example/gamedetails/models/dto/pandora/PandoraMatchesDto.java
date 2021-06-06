@@ -13,5 +13,5 @@ public class PandoraMatchesDto {
     private MatchStatus status;
     private LocalDateTime scheduledAt;
 
-    private List<PandoraTeamScoreDto> teams;
+    private List<PandoraTeamScoreDto> pandoraTeamScoreDtos;
 }

@@ -2,6 +2,7 @@ package com.example.gamedetails.models.enums;
 
 public enum GamesNames {
     LOL,
-    DOTA,
+    DOTA2,
+    CODMW,
     VALORANT
 }

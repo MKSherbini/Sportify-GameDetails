@@ -33,9 +33,13 @@ public class MatchAdapter {
             obj.setId(element.get("id").asInt());
             obj.setStatus(MatchStatus.valueOf(element.get("status").asText().toUpperCase()));
 
-            var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
-            var date = LocalDateTime.parse(element.get("scheduled_at").asText(), formatter);
-            obj.setScheduledAt(date);
+            try {
+                var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
+                var date = LocalDateTime.parse(element.get("scheduled_at").asText(), formatter);
+                obj.setScheduledAt(date);
+            } catch (java.time.format.DateTimeParseException e) {
+                continue;
+            }
 
             var teamScoreList = new ArrayList<PandoraTeamScoreDto>();
 
@@ -52,7 +56,7 @@ public class MatchAdapter {
                 team.setScore(results.next().get("score").asInt());
             }
 
-            obj.setTeams(teamScoreList);
+            obj.setPandoraTeamScoreDtos(teamScoreList);
 
             pandoraList.add(obj);
         }
@@ -76,11 +80,12 @@ public class MatchAdapter {
         return matchOrm;
     }
 
-    public TeamMatchScore pandoraTeamsToOrmTeams(PandoraTeamScoreDto pandoraTeamScoreDto, Match matchOrm) {
+    public TeamMatchScore pandoraTeamsToOrmTeams(PandoraTeamScoreDto pandoraTeamScoreDto, Match matchOrm, Team team) {
         var teamMatchScore = new TeamMatchScore();
         teamMatchScore.setMatch(matchOrm);
         teamMatchScore.setScore(pandoraTeamScoreDto.getScore());
-        teamMatchScore.setTeam(new Team(pandoraTeamScoreDto.getAcronym(), pandoraTeamScoreDto.getName()));
+        teamMatchScore.setTeam(team);
+//        new Team(pandoraTeamScoreDto.getAcronym(), pandoraTeamScoreDto.getName())
         return teamMatchScore;
     }
 
