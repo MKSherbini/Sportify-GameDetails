@@ -1,9 +1,11 @@
 package com.example.gamedetails.models.orm;
 
 import com.example.gamedetails.models.enums.GamesNames;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class Game {
     private GamesNames codeName;
 
     private String name;
+    @Column(length = 9999)
     private String description;
     private String platform;
     private Date releaseDate;
@@ -30,8 +33,12 @@ public class Game {
     private int minAge;
 
     @OneToMany(mappedBy = "game")
+    @JsonIgnore
+    @ToString.Exclude
     List<Match> matches = new ArrayList<>();
 
     @OneToMany(mappedBy = "game")
+    @JsonIgnore
+    @ToString.Exclude
     List<News> news = new ArrayList<>();
 }

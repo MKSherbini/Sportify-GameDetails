@@ -6,5 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TeamDto {
+    private String acronym;
     private String name;
 }
