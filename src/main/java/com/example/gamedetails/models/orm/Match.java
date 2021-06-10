@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,6 +31,7 @@ public class Match {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @OneToMany(mappedBy = "match")
-    private List<TeamMatchScore> teams;
+    // todo fk jpa, why eager?
+    @OneToMany(mappedBy = "match", fetch = FetchType.EAGER)
+    private List<TeamMatchScore> teams = new ArrayList<>();
 }

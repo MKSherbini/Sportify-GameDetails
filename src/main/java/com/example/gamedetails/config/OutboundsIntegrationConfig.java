@@ -16,17 +16,16 @@ import org.springframework.messaging.SubscribableChannel;
 @Configuration
 public class OutboundsIntegrationConfig {
 
-    private final String queueName = "testQueueAuto";
-//    private String queueName = "testQueue";
-
+    // rabbitmq queue
+    private final String queueName = "finishedMatchesQueue";
 
     @Bean
-    public MessageChannel testChannel() {
+    public MessageChannel finishedMatchesChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    @Transformer(inputChannel = "testChannel", outputChannel = "toRabbit")
+    @Transformer(inputChannel = "finishedMatchesChannel", outputChannel = "toRabbit")
     public ObjectToJsonTransformer objectToJsonTransformer() {
         return new ObjectToJsonTransformer();
     }
@@ -56,7 +55,7 @@ public class OutboundsIntegrationConfig {
     @Bean
     @ServiceActivator(inputChannel = "toRabbit")
     public AmqpOutboundEndpoint rabbitOutboundEndpoint(AmqpTemplate amqpTemplate) {
-        AmqpOutboundEndpoint adapter = new AmqpOutboundEndpoint(amqpTemplate);
+        var adapter = new AmqpOutboundEndpoint(amqpTemplate);
         adapter.setRoutingKey(queueName);
         return adapter;
     }

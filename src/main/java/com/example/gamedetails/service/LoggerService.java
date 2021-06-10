@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 @Slf4j
 public class LoggerService {
 
-    @ServiceActivator(inputChannel = "testChannel", outputChannel = "returnTestChannel")
+    @ServiceActivator(inputChannel = "finishedMatchesChannel", outputChannel = "returnTestChannel")
     public Object logIt(@Header("time") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime time,
                         @Payload Object obj) {
         log.info("{} LoggerService.logIt: {}", time, obj);

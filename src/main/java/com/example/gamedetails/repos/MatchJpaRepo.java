@@ -6,4 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MatchJpaRepo extends JpaRepository<Match, Integer> {
     boolean existsByPandoraIdIsAndNameIs(Integer pandoraId, String name);
+    // todo eb2a esma3 kalam hadeer :)
+    Match queryByPandoraIdIsAndNameIs(Integer pandoraId, String name);
+
 }
