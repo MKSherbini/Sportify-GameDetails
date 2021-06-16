@@ -1,16 +1,12 @@
 package com.example.gamedetails.service;
 
-import com.example.gamedetails.models.dto.GameDetailsDto;
-import com.example.gamedetails.models.dto.MatchesDto;
+import com.example.gamedetails.models.dto.GameDto;
+import com.example.gamedetails.models.dto.MatchDto;
 import com.example.gamedetails.models.dto.NewsDto;
 import com.example.gamedetails.models.enums.GamesNames;
 import com.example.gamedetails.models.orm.Game;
-import com.example.gamedetails.models.orm.News;
 import com.example.gamedetails.repos.GameJpaRepo;
-import com.example.gamedetails.repos.MatchJpaRepo;
-import com.example.gamedetails.repos.NewsJpaRepo;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,19 +33,19 @@ public class GameService {
                 .collect(Collectors.toList());
     }
 
-    public List<MatchesDto> getMatches(GamesNames game) {
+    public List<MatchDto> getMatches(GamesNames game) {
         Optional<Game> gameObj = gameJpaRepo.findById(game);
         if (gameObj.isEmpty()) return new ArrayList<>();
 
         return gameObj.get().getMatches().stream()
-                .map(match -> modelMapper.map(match, MatchesDto.class))
+                .map(match -> modelMapper.map(match, MatchDto.class))
                 .collect(Collectors.toList());
     }
 
-    public GameDetailsDto getGameDetails(GamesNames game) {
+    public GameDto getGameDetails(GamesNames game) {
         Optional<Game> gameObj = gameJpaRepo.findById(game);
         if (gameObj.isEmpty()) return null;
 
-        return modelMapper.map(gameObj.get(), GameDetailsDto.class);
+        return modelMapper.map(gameObj.get(), GameDto.class);
     }
 }

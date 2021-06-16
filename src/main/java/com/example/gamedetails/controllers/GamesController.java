@@ -1,29 +1,27 @@
 package com.example.gamedetails.controllers;
 
-import com.example.gamedetails.models.dto.GameDetailsDto;
-import com.example.gamedetails.models.dto.MatchesDto;
+import com.example.gamedetails.models.dto.GameDto;
+import com.example.gamedetails.models.dto.MatchDto;
 import com.example.gamedetails.models.dto.NewsDto;
 import com.example.gamedetails.models.enums.GamesNames;
 import com.example.gamedetails.service.GameService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/gamesInfo")
-public class GameDetailsController {
+@RequestMapping("/games")
+@CrossOrigin
+public class GamesController {
 
     private final GameService gameService;
 
-    public GameDetailsController(GameService gameService) {
+    public GamesController(GameService gameService) {
         this.gameService = gameService;
     }
 
     @GetMapping("/{game}")
-    public GameDetailsDto getGameDetails(@PathVariable GamesNames game) {
+    public GameDto getGameDetails(@PathVariable GamesNames game) {
         return gameService.getGameDetails(game);
     }
 
@@ -33,7 +31,7 @@ public class GameDetailsController {
     }
 
     @GetMapping("/{game}/matches")
-    public List<MatchesDto> getGameMatches(@PathVariable GamesNames game) {
+    public List<MatchDto> getGameMatches(@PathVariable GamesNames game) {
         return gameService.getMatches(game);
     }
 }

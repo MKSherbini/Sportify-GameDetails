@@ -2,11 +2,14 @@ package com.example.gamedetails.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+
 public class NewsDto {
     private String title;
     private String image;

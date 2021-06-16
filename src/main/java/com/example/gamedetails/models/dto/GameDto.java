@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameDetailsDto {
+public class GameDto {
     private String codeName;
     private String name;
     private String description;
