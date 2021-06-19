@@ -15,6 +15,7 @@ import com.example.gamedetails.repos.TeamMatchScoreJpaRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,6 @@ public class FetchingService {
         fetchMatchesByGame(GamesNames.CODMW);
     }
 
-    @Transactional
     public void fetchMatchesByGame(GamesNames gameName) {
         var restTemplate = new RestTemplate();
         // todo optimise query to pandora
@@ -67,11 +67,13 @@ public class FetchingService {
             return;
         }
 
+        log.info("{} {}", gameName.name().toLowerCase(), pandoraMatchesDtos.size());
+        int i = 0;
         for (var matchItem : pandoraMatchesDtos) {
             var matchOrm = matchAdapter.pandoraMatchToTeamMatchOrm(matchItem);
             matchOrm.setGame(gameJpaRepo.getById(gameName));
-
             var matchExists = matchJpaRepo.existsByPandoraIdIsAndNameIs(matchOrm.getPandoraId(), matchOrm.getName());
+            log.info("{}: {} {} exists:{}", i++, matchOrm.getPandoraId(), matchOrm.getName(), matchExists);
             if (!matchExists) {
                 matchJpaRepo.saveAndFlush(matchOrm);
 
@@ -93,10 +95,13 @@ public class FetchingService {
                 }
             } else {
                 var dbMatch = matchJpaRepo.queryByPandoraIdIsAndNameIs(matchOrm.getPandoraId(), matchOrm.getName());
+                log.info("{} {} vs {} {}", matchOrm.getPandoraId(), matchOrm.getStatus(), dbMatch.getPandoraId(), dbMatch.getStatus());
+
                 if (matchOrm.getStatus() == MatchStatus.FINISHED && dbMatch.getStatus() != MatchStatus.FINISHED) {
                     dbMatch.getTeams().forEach(teamMatchScore ->
                             teamMatchScore.setScore(matchItem.getPandoraTeamScoreDtos().stream().filter(pandoraTeamScoreDto -> pandoraTeamScoreDto.getAcronym().equals(teamMatchScore.getTeam().getAcronym())).findFirst().get().getScore()));
 
+                    teamMatchScoreJpaRepo.saveAllAndFlush(dbMatch.getTeams());
                     dbMatch.setStatus(MatchStatus.FINISHED);
                     matchJpaRepo.saveAndFlush(dbMatch);
                     sendMatchResult(dbMatch);
