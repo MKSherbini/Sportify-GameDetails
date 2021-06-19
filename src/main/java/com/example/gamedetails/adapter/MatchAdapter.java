@@ -1,5 +1,6 @@
 package com.example.gamedetails.adapter;
 
+import com.example.gamedetails.models.dto.MatchDto;
 import com.example.gamedetails.models.dto.pandora.PandoraMatchesDto;
 import com.example.gamedetails.models.dto.pandora.PandoraTeamScoreDto;
 import com.example.gamedetails.models.enums.MatchStatus;
@@ -9,6 +10,7 @@ import com.example.gamedetails.models.orm.TeamMatchScore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -19,7 +21,17 @@ import java.util.Locale;
 
 @Component
 public class MatchAdapter {
+    private final ModelMapper modelMapper;
 
+    public MatchAdapter(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
+
+    public MatchDto ormToDto(Match matchOrm) {
+        var matchDto = modelMapper.map(matchOrm, MatchDto.class);
+        matchDto.setGame(matchOrm.getGame().getCodeName().toString());
+        return matchDto;
+    }
 
     public List<PandoraMatchesDto> jsonToPandoraMatchesDto(String body) throws JsonProcessingException {
         var mapper = new ObjectMapper();
