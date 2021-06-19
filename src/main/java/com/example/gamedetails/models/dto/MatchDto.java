@@ -17,4 +17,6 @@ public class MatchDto {
     private LocalDateTime scheduledAt;
     private List<TeamMatchScoreDto> teams;
     private MatchStatus status;
+
+    private String game;
 }

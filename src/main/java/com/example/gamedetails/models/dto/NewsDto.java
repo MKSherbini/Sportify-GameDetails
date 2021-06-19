@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class NewsDto {
     private Integer id;
     private String title;
@@ -19,4 +18,6 @@ public class NewsDto {
     private String publisher;
     //hanb2a ntfahem
     private String content;
+
+    private String game;
 }

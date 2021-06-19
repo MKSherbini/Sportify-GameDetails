@@ -32,8 +32,11 @@ public class GameService {
 
     public List<NewsDto> getNews() {
         return newsJpaRepo.findAll().stream()
-                .map(news -> modelMapper.map(news, NewsDto.class))
-                .collect(Collectors.toList());
+                .map(news -> {
+                    NewsDto newsDto = modelMapper.map(news, NewsDto.class);
+                    newsDto.setGame(news.getGame().getCodeName().toString());
+                    return newsDto;
+                }).collect(Collectors.toList());
     }
 
     public List<NewsDto> getNews(GamesNames game) {
@@ -41,14 +44,28 @@ public class GameService {
         if (gameObj.isEmpty()) return new ArrayList<>();
 
         return gameObj.get().getNews().stream()
-                .map(news -> modelMapper.map(news, NewsDto.class))
-                .collect(Collectors.toList());
+                .map(news -> {
+                    NewsDto newsDto = modelMapper.map(news, NewsDto.class);
+                    newsDto.setGame(news.getGame().getCodeName().toString());
+                    return newsDto;
+                }).collect(Collectors.toList());
     }
 
     public List<MatchDto> getMatches() {
         return matchJpaRepo.findAll().stream()
-                .map(match -> modelMapper.map(match, MatchDto.class))
-                .collect(Collectors.toList());
+                .map(match -> {
+                    var matchDto = modelMapper.map(match, MatchDto.class);
+                    matchDto.setGame(match.getGame().getCodeName().toString());
+                    return matchDto;
+                }).collect(Collectors.toList());
+    }
+
+    public MatchDto getMatch(Integer id) {
+        return modelMapper.map(matchJpaRepo.getById(id), MatchDto.class);
+    }
+
+    public NewsDto getNews(Integer id) {
+        return modelMapper.map(newsJpaRepo.getById(id), NewsDto.class);
     }
 
     public List<MatchDto> getMatches(GamesNames game) {
@@ -56,7 +73,16 @@ public class GameService {
         if (gameObj.isEmpty()) return new ArrayList<>();
 
         return gameObj.get().getMatches().stream()
-                .map(match -> modelMapper.map(match, MatchDto.class))
+                .map(match -> {
+                    var matchDto = modelMapper.map(match, MatchDto.class);
+                    matchDto.setGame(match.getGame().getCodeName().toString());
+                    return matchDto;
+                }).collect(Collectors.toList());
+    }
+
+    public List<GameDto> getGameDetails() {
+        return gameJpaRepo.findAll().stream()
+                .map(game -> modelMapper.map(game, GameDto.class))
                 .collect(Collectors.toList());
     }
 
