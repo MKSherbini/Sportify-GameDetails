@@ -25,13 +25,24 @@ public class GamesController {
         return gameService.getGameDetails(game);
     }
 
+    @GetMapping("/news")
+    public List<NewsDto> getNews() {
+        return gameService.getNews();
+    }
+
     @GetMapping("/{game}/news")
     public List<NewsDto> getGameNews(@PathVariable GamesNames game) {
         return gameService.getNews(game);
+    }
+
+    @GetMapping("/matches")
+    public List<MatchDto> getMatches() {
+        return gameService.getMatches();
     }
 
     @GetMapping("/{game}/matches")
     public List<MatchDto> getGameMatches(@PathVariable GamesNames game) {
         return gameService.getMatches(game);
     }
+
 }

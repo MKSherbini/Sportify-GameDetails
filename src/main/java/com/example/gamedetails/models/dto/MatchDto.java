@@ -12,10 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MatchDto {
+    private Integer id;
     private String name;
     private LocalDateTime scheduledAt;
     private List<TeamMatchScoreDto> teams;
     private MatchStatus status;
-
-
 }

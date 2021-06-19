@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 
 public class NewsDto {
+    private Integer id;
     private String title;
     private String image;
     private String description;
