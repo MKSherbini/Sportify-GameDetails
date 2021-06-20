@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Locale;
 
 @Component
-@Slf4j
 public class MatchAdapter {
     private final ModelMapper modelMapper;
 
@@ -35,9 +34,15 @@ public class MatchAdapter {
         return matchDto;
     }
 
-    public List<PandoraMatchesDto> jsonToPandoraMatchesDto(String body) throws JsonProcessingException {
+    public List<PandoraMatchesDto> jsonToPandoraMatchesDto(String body) {
         var mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(body);
+        JsonNode root;
+        try {
+            root = mapper.readTree(body);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
 
         var pandoraList = new ArrayList<PandoraMatchesDto>();
 
@@ -61,6 +66,8 @@ public class MatchAdapter {
                 var teamObj = new PandoraTeamScoreDto();
                 teamObj.setAcronym(team.get("opponent").get("acronym").asText());
                 teamObj.setName(team.get("opponent").get("name").asText());
+                teamObj.setImageUrl(team.get("opponent").get("image_url").asText());
+                teamObj.setId(team.get("opponent").get("id").asInt());
                 teamScoreList.add(teamObj);
             }
 

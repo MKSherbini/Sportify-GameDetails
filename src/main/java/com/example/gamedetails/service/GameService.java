@@ -1,17 +1,14 @@
 package com.example.gamedetails.service;
 
-import com.example.gamedetails.adapter.GameAdapter;
-import com.example.gamedetails.adapter.MatchAdapter;
-import com.example.gamedetails.adapter.NewsAdapter;
+import com.example.gamedetails.adapter.*;
 import com.example.gamedetails.models.dto.GameDto;
 import com.example.gamedetails.models.dto.MatchDto;
 import com.example.gamedetails.models.dto.NewsDto;
+import com.example.gamedetails.models.dto.TeamDto;
 import com.example.gamedetails.models.enums.GamesNames;
 import com.example.gamedetails.models.orm.Game;
-import com.example.gamedetails.repos.GameJpaRepo;
-import com.example.gamedetails.repos.MatchJpaRepo;
-import com.example.gamedetails.repos.NewsJpaRepo;
-import org.modelmapper.ModelMapper;
+import com.example.gamedetails.models.orm.Team;
+import com.example.gamedetails.repos.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,14 +24,18 @@ public class GameService {
     private final NewsAdapter newsAdapter;
     private final MatchAdapter matchAdapter;
     private final GameAdapter gameAdapter;
+    private final TeamJpaRepo teamJpaRepo;
+    private final TeamAdapter teamAdapter;
 
-    public GameService(GameJpaRepo gameJpaRepo, MatchJpaRepo matchJpaRepo, NewsJpaRepo newsJpaRepo, ModelMapper modelMapper, NewsAdapter newsAdapter, MatchAdapter matchAdapter, GameAdapter gameAdapter) {
+    public GameService(GameJpaRepo gameJpaRepo, MatchJpaRepo matchJpaRepo, NewsJpaRepo newsJpaRepo, NewsAdapter newsAdapter, MatchAdapter matchAdapter, GameAdapter gameAdapter, TeamJpaRepo teamJpaRepo, TeamMemberJpaRepo teamMemberJpaRepo, TeamMemberAdapter teamMemberAdapter, TeamAdapter teamAdapter) {
         this.gameJpaRepo = gameJpaRepo;
         this.matchJpaRepo = matchJpaRepo;
         this.newsJpaRepo = newsJpaRepo;
         this.newsAdapter = newsAdapter;
         this.matchAdapter = matchAdapter;
         this.gameAdapter = gameAdapter;
+        this.teamJpaRepo = teamJpaRepo;
+        this.teamAdapter = teamAdapter;
     }
 
     public List<NewsDto> getNews() {
@@ -82,5 +83,12 @@ public class GameService {
         if (gameObj.isEmpty()) return null;
 
         return gameAdapter.ormToDto(gameObj.get());
+    }
+
+    public TeamDto getTeam(int id) {
+        Optional<Team> obj = teamJpaRepo.findById(id);
+        if (obj.isEmpty()) return null;
+
+        return teamAdapter.ormToDto(obj.get());
     }
 }

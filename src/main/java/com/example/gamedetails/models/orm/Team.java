@@ -22,14 +22,19 @@ public class Team {
 
     private String acronym;
     private String name;
+    private String imageUrl;
 
     @OneToMany(mappedBy = "team")
     @JsonIgnore
     @ToString.Exclude
     private List<TeamMatchScore> teamMatchScores = new ArrayList<>();
 
-    public Team(String acronym, String name) {
+    @OneToMany(mappedBy = "team")
+    private List<TeamMember> teamMembers = new ArrayList<>();
+
+    public Team(String acronym, String name, String imageUrl) {
         this.acronym = acronym;
         this.name = name;
+        this.imageUrl = imageUrl;
     }
 }

@@ -3,6 +3,7 @@ package com.example.gamedetails.controllers;
 import com.example.gamedetails.models.dto.GameDto;
 import com.example.gamedetails.models.dto.MatchDto;
 import com.example.gamedetails.models.dto.NewsDto;
+import com.example.gamedetails.models.dto.TeamDto;
 import com.example.gamedetails.models.enums.GamesNames;
 import com.example.gamedetails.repos.MatchJpaRepo;
 import com.example.gamedetails.repos.NewsJpaRepo;
@@ -63,4 +64,8 @@ public class GamesController {
         return gameService.getMatches(game);
     }
 
+    @GetMapping("/teams/{teamId}")
+    public TeamDto getTeam(@PathVariable Integer teamId) {
+        return gameService.getTeam(teamId);
+    }
 }
