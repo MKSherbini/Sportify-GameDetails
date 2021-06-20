@@ -10,6 +10,7 @@ import com.example.gamedetails.models.orm.TeamMatchScore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Component
+@Slf4j
 public class MatchAdapter {
     private final ModelMapper modelMapper;
 

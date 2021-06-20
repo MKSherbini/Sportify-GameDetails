@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class TeamDto {
+    private long id;
     private String acronym;
     private String name;
 }
