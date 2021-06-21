@@ -22,7 +22,7 @@ public class MatchesController {
         return matchService.getMatch(matchId);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<MatchDto> getAllMatches(){
         return matchService.getMatches();
     }
