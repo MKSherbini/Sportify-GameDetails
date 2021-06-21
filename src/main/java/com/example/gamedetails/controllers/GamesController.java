@@ -1,12 +1,7 @@
 package com.example.gamedetails.controllers;
 
-import com.example.gamedetails.models.dto.GameDto;
-import com.example.gamedetails.models.dto.MatchDto;
-import com.example.gamedetails.models.dto.NewsDto;
-import com.example.gamedetails.models.dto.TeamDto;
+import com.example.gamedetails.models.dto.*;
 import com.example.gamedetails.models.enums.GamesNames;
-import com.example.gamedetails.repos.MatchJpaRepo;
-import com.example.gamedetails.repos.NewsJpaRepo;
 import com.example.gamedetails.service.GameService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +15,7 @@ public class GamesController {
     private final GameService gameService;
 
 
-    public GamesController(GameService gameService, MatchJpaRepo matchJpaRepo, NewsJpaRepo newsJpaRepo) {
+    public GamesController(GameService gameService) {
         this.gameService = gameService;
     }
 
@@ -40,7 +35,7 @@ public class GamesController {
     }
 
     @GetMapping("/news/{newsId}")
-    public NewsDto getNews(@PathVariable Integer newsId) {
+    public NewsDetailsDto getNews(@PathVariable Integer newsId) {
         return gameService.getNews(newsId);
     }
 

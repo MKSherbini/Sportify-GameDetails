@@ -1,5 +1,6 @@
 package com.example.gamedetails.models.dto;
 
+import com.example.gamedetails.models.enums.GamesNames;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,20 +10,15 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewsDto {
+public class NewsDetailsDto {
     private Integer id;
     private String title;
     private String image;
     private String description;
     private Date date;
     private String publisher;
-    private String game;
+    //hanb2a ntfahem
+    private String content;
 
-
-    public void setDescription(String description){
-        if(description.length()>100){
-            description = description.substring(0,100);
-        }
-        this.description = description;
-    }
+    private GamesNames game;
 }

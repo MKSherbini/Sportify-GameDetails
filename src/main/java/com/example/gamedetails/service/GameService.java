@@ -1,10 +1,7 @@
 package com.example.gamedetails.service;
 
 import com.example.gamedetails.adapter.*;
-import com.example.gamedetails.models.dto.GameDto;
-import com.example.gamedetails.models.dto.MatchDto;
-import com.example.gamedetails.models.dto.NewsDto;
-import com.example.gamedetails.models.dto.TeamDto;
+import com.example.gamedetails.models.dto.*;
 import com.example.gamedetails.models.enums.GamesNames;
 import com.example.gamedetails.models.orm.Game;
 import com.example.gamedetails.models.orm.Team;
@@ -27,7 +24,7 @@ public class GameService {
     private final TeamJpaRepo teamJpaRepo;
     private final TeamAdapter teamAdapter;
 
-    public GameService(GameJpaRepo gameJpaRepo, MatchJpaRepo matchJpaRepo, NewsJpaRepo newsJpaRepo, NewsAdapter newsAdapter, MatchAdapter matchAdapter, GameAdapter gameAdapter, TeamJpaRepo teamJpaRepo, TeamMemberJpaRepo teamMemberJpaRepo, TeamMemberAdapter teamMemberAdapter, TeamAdapter teamAdapter) {
+    public GameService(GameJpaRepo gameJpaRepo, MatchJpaRepo matchJpaRepo, NewsJpaRepo newsJpaRepo, NewsAdapter newsAdapter, MatchAdapter matchAdapter, GameAdapter gameAdapter, TeamJpaRepo teamJpaRepo, TeamAdapter teamAdapter) {
         this.gameJpaRepo = gameJpaRepo;
         this.matchJpaRepo = matchJpaRepo;
         this.newsJpaRepo = newsJpaRepo;
@@ -43,8 +40,8 @@ public class GameService {
                 .map(newsAdapter::ormToDto).collect(Collectors.toList());
     }
 
-    public NewsDto getNews(Integer id) {
-        return newsAdapter.ormToDto(newsJpaRepo.getById(id));
+    public NewsDetailsDto getNews(Integer id) {
+        return newsAdapter.ormToNewsDetailsDto(newsJpaRepo.getById(id));
     }
 
     public List<NewsDto> getNews(GamesNames game) {
