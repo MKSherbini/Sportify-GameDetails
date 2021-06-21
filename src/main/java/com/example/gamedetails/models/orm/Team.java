@@ -22,6 +22,7 @@ public class Team {
 
     private String acronym;
     private String name;
+    @Column(length = 99999)
     private String imageUrl;
 
     @OneToMany(mappedBy = "team")

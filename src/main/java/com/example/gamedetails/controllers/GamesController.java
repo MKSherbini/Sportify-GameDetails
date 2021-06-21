@@ -29,29 +29,9 @@ public class GamesController {
         return gameService.getGameDetails(game);
     }
 
-    @GetMapping("/news")
-    public List<NewsDto> getNews() {
-        return gameService.getNews();
-    }
-
-    @GetMapping("/news/{newsId}")
-    public NewsDetailsDto getNews(@PathVariable Integer newsId) {
-        return gameService.getNews(newsId);
-    }
-
     @GetMapping("/{game}/news")
     public List<NewsDto> getGameNews(@PathVariable GamesNames game) {
         return gameService.getNews(game);
-    }
-
-    @GetMapping("/matches")
-    public List<MatchDto> getMatches() {
-        return gameService.getMatches();
-    }
-
-    @GetMapping("/matches/{matchId}")
-    public MatchDto getMatch(@PathVariable Integer matchId) {
-        return gameService.getMatch(matchId);
     }
 
     @GetMapping("/{game}/matches")
@@ -59,8 +39,5 @@ public class GamesController {
         return gameService.getMatches(game);
     }
 
-    @GetMapping("/teams/{teamId}")
-    public TeamDto getTeam(@PathVariable Integer teamId) {
-        return gameService.getTeam(teamId);
-    }
+
 }

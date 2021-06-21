@@ -17,12 +17,16 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 999999)
     private String title;
+    @Column(length = 99999)
     private String image;
+    @Column(length = 999999)
     private String description;
     private Date date;
     private String publisher;
     //hanb2a ntfahem
+    @Column(length = 999999)
     private String content;
 
     @ManyToOne

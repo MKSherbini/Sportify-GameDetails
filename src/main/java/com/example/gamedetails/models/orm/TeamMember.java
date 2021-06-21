@@ -21,6 +21,7 @@ public class TeamMember {
     private String birthYear;
     private String birthday;
     private String hometown;
+    @Column(length = 99999)
     private String imageUrl;
     private String firstName;
     private String lastName;

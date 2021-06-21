@@ -16,32 +16,15 @@ import java.util.stream.Collectors;
 @Service
 public class GameService {
     private final GameJpaRepo gameJpaRepo;
-    private final MatchJpaRepo matchJpaRepo;
-    private final NewsJpaRepo newsJpaRepo;
     private final NewsAdapter newsAdapter;
     private final MatchAdapter matchAdapter;
     private final GameAdapter gameAdapter;
-    private final TeamJpaRepo teamJpaRepo;
-    private final TeamAdapter teamAdapter;
 
-    public GameService(GameJpaRepo gameJpaRepo, MatchJpaRepo matchJpaRepo, NewsJpaRepo newsJpaRepo, NewsAdapter newsAdapter, MatchAdapter matchAdapter, GameAdapter gameAdapter, TeamJpaRepo teamJpaRepo, TeamAdapter teamAdapter) {
+    public GameService(GameJpaRepo gameJpaRepo, NewsAdapter newsAdapter, MatchAdapter matchAdapter, GameAdapter gameAdapter) {
         this.gameJpaRepo = gameJpaRepo;
-        this.matchJpaRepo = matchJpaRepo;
-        this.newsJpaRepo = newsJpaRepo;
         this.newsAdapter = newsAdapter;
         this.matchAdapter = matchAdapter;
         this.gameAdapter = gameAdapter;
-        this.teamJpaRepo = teamJpaRepo;
-        this.teamAdapter = teamAdapter;
-    }
-
-    public List<NewsDto> getNews() {
-        return newsJpaRepo.findAll().stream()
-                .map(newsAdapter::ormToDto).collect(Collectors.toList());
-    }
-
-    public NewsDetailsDto getNews(Integer id) {
-        return newsAdapter.ormToNewsDetailsDto(newsJpaRepo.getById(id));
     }
 
     public List<NewsDto> getNews(GamesNames game) {
@@ -50,15 +33,6 @@ public class GameService {
 
         return gameObj.get().getNews().stream()
                 .map(newsAdapter::ormToDto).collect(Collectors.toList());
-    }
-
-    public List<MatchDto> getMatches() {
-        return matchJpaRepo.findAll().stream()
-                .map(matchAdapter::ormToDto).collect(Collectors.toList());
-    }
-
-    public MatchDto getMatch(Integer id) {
-        return matchAdapter.ormToDto(matchJpaRepo.getById(id));
     }
 
     public List<MatchDto> getMatches(GamesNames game) {
@@ -80,12 +54,5 @@ public class GameService {
         if (gameObj.isEmpty()) return null;
 
         return gameAdapter.ormToDto(gameObj.get());
-    }
-
-    public TeamDto getTeam(int id) {
-        Optional<Team> obj = teamJpaRepo.findById(id);
-        if (obj.isEmpty()) return null;
-
-        return teamAdapter.ormToDto(obj.get());
     }
 }
