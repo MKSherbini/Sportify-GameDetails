@@ -51,6 +51,7 @@ public class FetchingService {
     @Scheduled(fixedRate = 1000 * 60 * 60)
     public void fetchMatches() {
 //        log.info("FetchingService.fetchMatches");
+        fetchMatchesByGame(GamesNames.VALORANT);
         fetchMatchesByGame(GamesNames.LOL);
         fetchMatchesByGame(GamesNames.DOTA2);
         fetchMatchesByGame(GamesNames.CODMW);

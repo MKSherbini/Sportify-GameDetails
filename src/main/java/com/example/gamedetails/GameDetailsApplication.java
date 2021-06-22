@@ -99,6 +99,20 @@ public class GameDetailsApplication {
                 cod.setMinAge(12);
                 gameJpaRepo.saveAndFlush(cod);
             }
+            if (!gameJpaRepo.existsById(GamesNames.VALORANT)) {
+                var valorant = new Game();
+                valorant.setCodeName(GamesNames.VALORANT);
+                valorant.setName("Valorant");
+                valorant.setDescription("League of Legends (LoL) is a team-based online multiplayer by Riot Games. It is one of the most successful video games of all time and has a strong presence in the esports industry. LoL is a Free2Play MOBA, a Multiplayer Online Battle Arena game, and has around 8 Million concurrent players (2019). Two teams play 5 v 5 on the map Summoner’s Rift, with the objective of destroying each other’s base-core, the Nexus. Each match starts with the selection of a character, a Champion. There are over 150 different Champions. They differ in looks, abilities, attack type and playstyle. Bases are separated by three different lanes. The area between those lanes is called the Jungle. In order to get to the enemy base, you have to destroy towers, that are placed on the all three lanes. Minions, that are periodically spawned from your nexus, help you with your objective and automatically attack towers on their way to the enemy base. Inside the Jungle there are two main objectives that provide powerful buffs, after being slain by a team: The Baron Nashor and the elemental Drakes. In order to win you have to gain experience and gold, by defeating enemy players and monsters. A game ends, when one of the Nexus explode.");
+                valorant.setPlatform("Windows, Mac");
+                valorant.setReleaseDate(new Date((1256673833000L)));
+                valorant.setProfitModel("Free2Play + Microtransactions");
+                valorant.setGenre("Multiplayer Online Battle Arena, (MOBA)");
+                valorant.setPublisher("Riot Games Inc., Tencent Holdings Ltd. (owner of branch in Los-Angeles)");
+                valorant.setDesigner("Riot Games");
+                valorant.setMinAge(12);
+                gameJpaRepo.saveAndFlush(valorant);
+            }
 
         };
     }
