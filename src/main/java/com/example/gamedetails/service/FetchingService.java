@@ -71,10 +71,16 @@ public class FetchingService {
         var restTemplate = new RestTemplate();
         // todo optimise query to pandora
         ResponseEntity<String> response = restTemplate.getForEntity("https://api.pandascore.co/" + gameName.name().toLowerCase() + "/matches?token=D7pVhsHNRdbnETpxVeN3UnSb7oHGQokBzSdECxkm-gov5JIELdE", String.class);
-
         List<PandoraMatchesDto> pandoraMatchesDtos = matchAdapter.jsonToPandoraMatchesDto(response.getBody());
+        addMatchesToDB(gameName, pandoraMatchesDtos);
 
-//        log.info("{} {}", gameName.name().toLowerCase(), pandoraMatchesDtos.size());
+        response = restTemplate.getForEntity("https://api.pandascore.co/" + gameName.name().toLowerCase() + "/matches/past?token=D7pVhsHNRdbnETpxVeN3UnSb7oHGQokBzSdECxkm-gov5JIELdE", String.class);
+        pandoraMatchesDtos = matchAdapter.jsonToPandoraMatchesDto(response.getBody());
+        addMatchesToDB(gameName, pandoraMatchesDtos);
+    }
+
+    private void addMatchesToDB(GamesNames gameName, List<PandoraMatchesDto> pandoraMatchesDtos) {
+        //        log.info("{} {}", gameName.name().toLowerCase(), pandoraMatchesDtos.size());
 //        int i = 0;
         for (var matchItem : pandoraMatchesDtos) {
 //            log.info("{}", matchItem);
