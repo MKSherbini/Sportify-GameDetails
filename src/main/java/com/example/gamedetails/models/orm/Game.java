@@ -2,6 +2,7 @@ package com.example.gamedetails.models.orm;
 
 import com.example.gamedetails.models.enums.GamesNames;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "games")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Game {
     @Id
     private GamesNames codeName;

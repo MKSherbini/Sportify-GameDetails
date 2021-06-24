@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 // todo expose full crud to admin only
-@RepositoryRestResource(path = "gamesDb", collectionResourceRel = "gamesDb")
+@RepositoryRestResource(path = "gamesDb", collectionResourceRel = "gamesDb", exported = false)
 public interface GameJpaRepo extends JpaRepository<Game, GamesNames> {
 }

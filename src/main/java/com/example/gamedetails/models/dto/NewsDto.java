@@ -16,6 +16,7 @@ public class NewsDto {
     private String description;
     private Date date;
     private String publisher;
+    private String content;
     private String game;
 
 
