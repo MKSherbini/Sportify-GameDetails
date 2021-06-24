@@ -15,5 +15,5 @@ public class TeamDto {
     private String acronym;
     private String name;
     private String imageUrl;
-    private List<TeamMemberDto> teamMembers = new ArrayList<>();
+    private List<PlayerDto> players = new ArrayList<>();
 }

@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamMemberDto {
+public class PlayerDto {
+    private Integer id;
     private String birthYear;
     private String birthday;
     private String hometown;
@@ -21,4 +22,8 @@ public class TeamMemberDto {
     private String lastName;
     private String name;
     private String nationality;
+
+    private String teamAcronym;
+    private String teamName;
+    private String teamImageUrl;
 }

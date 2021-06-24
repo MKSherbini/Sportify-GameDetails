@@ -31,7 +31,7 @@ public class Team {
     private List<TeamMatchScore> teamMatchScores = new ArrayList<>();
 
     @OneToMany(mappedBy = "team")
-    private List<TeamMember> teamMembers = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
     public Team(String acronym, String name, String imageUrl) {
         this.acronym = acronym;

@@ -12,8 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "team_members")
-public class TeamMember {
+@Table(name = "players")
+public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,7 +28,7 @@ public class TeamMember {
     private String name;
     private String nationality;
 
-    public TeamMember(String birthYear, String birthday, String hometown, String imageUrl, String firstName, String lastName, String name, String nationality) {
+    public Player(String birthYear, String birthday, String hometown, String imageUrl, String firstName, String lastName, String name, String nationality) {
         this.birthYear = birthYear;
         this.birthday = birthday;
         this.hometown = hometown;

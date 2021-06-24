@@ -1,14 +1,14 @@
 package com.example.gamedetails.service;
 
 import com.example.gamedetails.adapter.MatchAdapter;
-import com.example.gamedetails.adapter.TeamMemberAdapter;
+import com.example.gamedetails.adapter.PlayerAdapter;
 import com.example.gamedetails.models.dto.broker.MatchResultMsgDto;
 import com.example.gamedetails.models.dto.pandora.PandoraMatchesDto;
 import com.example.gamedetails.models.enums.GamesNames;
 import com.example.gamedetails.models.enums.MatchStatus;
 import com.example.gamedetails.models.orm.Team;
 import com.example.gamedetails.models.orm.TeamMatchScore;
-import com.example.gamedetails.models.orm.TeamMember;
+import com.example.gamedetails.models.orm.Player;
 import com.example.gamedetails.publish.FinishedMatchesPublisher;
 import com.example.gamedetails.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class FetchingService {
     private MatchAdapter matchAdapter;
 
     @Autowired
-    private TeamMemberAdapter teamMemberAdapter;
+    private PlayerAdapter playerAdapter;
 
     @Autowired
     private MatchJpaRepo matchJpaRepo;
@@ -40,7 +40,7 @@ public class FetchingService {
     private TeamJpaRepo teamJpaRepo;
 
     @Autowired
-    private TeamMemberJpaRepo teamMemberJpaRepo;
+    private PlayerJpaRepo playerJpaRepo;
 
     @Autowired
     private TeamMatchScoreJpaRepo teamMatchScoreJpaRepo;
@@ -57,7 +57,7 @@ public class FetchingService {
         fetchMatchesByGame(GamesNames.CODMW);
     }
 
-    public List<TeamMember> fetchTeamByGameAndId(GamesNames gameName, Integer id) {
+    public List<Player> fetchTeamByGameAndId(GamesNames gameName, Integer id) {
         var restTemplate = new RestTemplate();
         // todo optimise query to pandora
         ResponseEntity<String> response = restTemplate.getForEntity(
@@ -65,7 +65,7 @@ public class FetchingService {
                         gameName.name().toLowerCase(), id),
                 String.class);
 
-        return teamMemberAdapter.jsonToOrm(response.getBody());
+        return playerAdapter.jsonToOrm(response.getBody());
     }
 
     public void fetchMatchesByGame(GamesNames gameName) {
@@ -105,7 +105,7 @@ public class FetchingService {
                         var teamMembers = fetchTeamByGameAndId(gameName, pandoraTeamScoreDto.getId());
                         teamJpaRepo.saveAndFlush(team);
                         teamMembers.forEach(teamMember -> teamMember.setTeam(team));
-                        teamMemberJpaRepo.saveAllAndFlush(teamMembers);
+                        playerJpaRepo.saveAllAndFlush(teamMembers);
                         teamExists = Optional.of(team);
                     }
 

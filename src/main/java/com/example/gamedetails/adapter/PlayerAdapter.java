@@ -1,11 +1,7 @@
 package com.example.gamedetails.adapter;
 
-import com.example.gamedetails.models.dto.NewsDto;
-import com.example.gamedetails.models.dto.TeamDto;
-import com.example.gamedetails.models.dto.TeamMemberDto;
-import com.example.gamedetails.models.dto.pandora.PandoraMatchesDto;
-import com.example.gamedetails.models.orm.News;
-import com.example.gamedetails.models.orm.TeamMember;
+import com.example.gamedetails.models.dto.PlayerDto;
+import com.example.gamedetails.models.orm.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,18 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TeamMemberAdapter {
+public class PlayerAdapter {
     private final ModelMapper modelMapper;
 
-    public TeamMemberAdapter(ModelMapper modelMapper) {
+    public PlayerAdapter(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
-    public TeamMemberDto ormToDto(TeamMember teamOrm) {
-        return modelMapper.map(teamOrm, TeamMemberDto.class);
+    public PlayerDto ormToDto(Player teamOrm) {
+        var playerDto = modelMapper.map(teamOrm, PlayerDto.class);
+        playerDto.setTeamName(teamOrm.getTeam().getName());
+        playerDto.setTeamAcronym(teamOrm.getTeam().getAcronym());
+        playerDto.setTeamImageUrl(teamOrm.getTeam().getImageUrl());
+        return playerDto;
     }
 
-    public List<TeamMember> jsonToOrm(String body) {
+    public List<Player> jsonToOrm(String body) {
         var mapper = new ObjectMapper();
         JsonNode root;
         try {
@@ -38,11 +38,11 @@ public class TeamMemberAdapter {
         }
         root = root.elements().next();
 
-        var teamMembers = new ArrayList<TeamMember>();
+        var teamMembers = new ArrayList<Player>();
 //        System.out.println(root.get("id"));
         for (var player :
                 root.get("players")) {
-            var member = new TeamMember(
+            var member = new Player(
                     player.get("birth_year").asText(),
                     player.get("birthday").asText(),
                     player.get("hometown").asText(),
